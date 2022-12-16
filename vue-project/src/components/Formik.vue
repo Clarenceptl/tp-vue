@@ -1,6 +1,5 @@
 <script setup>
-import { provide } from "vue";
-const emit = defineEmits(["submitted"]);
+import { provide, reactive } from "vue";
 
 const props = defineProps({
   validate: {
@@ -16,15 +15,19 @@ const props = defineProps({
     required: true,
   },
 });
-
 provide("formValues", props.initialValues);
+
+let error = reactive([]);
+provide("errors", error);
+
 const handleSubmit = (e) => {
   e.preventDefault();
+  if (error.length > 0) error.pop();
   const errors = props.validate(props.initialValues);
   if (Object.keys(errors).length === 0) {
     props.onSubmit(props.initialValues);
   } else {
-    console.log(errors, "errors");
+    error.push(errors);
   }
 };
 </script>

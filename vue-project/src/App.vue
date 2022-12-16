@@ -1,6 +1,7 @@
 <script setup>
 import Field from "./components/Field.vue";
 import Formik from "./components/Formik.vue";
+import Error from "./components/Error.vue";
 import { reactive } from "vue";
 
 const options = [
@@ -50,6 +51,7 @@ const validate = (values) => {
           {{ option.label }}
         </option>
       </Field>
+      <Error />
       <template v-slot:button="{ submitForm }">
         <button type="submit" @click="submitForm">Submit</button>
       </template>
