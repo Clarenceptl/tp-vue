@@ -1,21 +1,24 @@
 <script setup>
 import Field from "./components/Field.vue";
 import Formik from "./components/Formik.vue";
-import { ref } from "vue";
+import { reactive } from "vue";
 
 const options = [
   { value: "1", label: "Option 1" },
   { value: "2", label: "Option 2" },
   { value: "3", label: "Option 3" },
 ];
-const isSubmit = ref(false);
-const initialValues = {
-  email: "test@test.com",
-  password: "password",
-};
+const initialValues = reactive({
+  email: "",
+  password: "",
+  select: "3",
+});
 
 const submit = (values) => {
   console.log(values, "submit fonction");
+  initialValues.email = "";
+  initialValues.password = "";
+  initialValues.select = "3";
 };
 
 const validate = (values) => {
@@ -27,16 +30,11 @@ const validate = (values) => {
   }
   return errors;
 };
-
-const handleSubmit = (event) => {
-  event.preventDefault();
-  isSubmit.value = true;
-};
 </script>
 
 <template>
   <header>
-    <h1>He ça formik ou pas</h1>
+    <h1>Formikado</h1>
   </header>
 
   <main class="container">
@@ -44,8 +42,6 @@ const handleSubmit = (event) => {
       :initial-values="initialValues"
       :on-submit="submit"
       :validate="validate"
-      :is-submit="isSubmit"
-      @submitted="isSubmit = false"
     >
       <Field type="email" name="email" />
       <Field type="password" name="password" />
@@ -54,7 +50,9 @@ const handleSubmit = (event) => {
           {{ option.label }}
         </option>
       </Field>
-      <button type="submit" @click="handleSubmit">Submit</button>
+      <template v-slot:button="{ submitForm }">
+        <button type="submit" @click="submitForm">Submit</button>
+      </template>
     </Formik>
   </main>
 </template>

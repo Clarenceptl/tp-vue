@@ -1,6 +1,6 @@
 <script setup>
-import { provide, onUpdated } from "vue";
-const emit = defineEmits(['submitted']);
+import { provide } from "vue";
+const emit = defineEmits(["submitted"]);
 
 const props = defineProps({
   validate: {
@@ -15,27 +15,23 @@ const props = defineProps({
     type: Function,
     required: true,
   },
-  isSubmit: {
-    type: Boolean,
-    required: true,
-  }
 });
 
 provide("formValues", props.initialValues);
-
-onUpdated(() => {
-  if (props.isSubmit) {
-    const errors = props.validate(props.initialValues);
-    if (Object.keys(errors).length === 0) {
-        props.onSubmit(props.initialValues);
-        emit('submitted');
-    }else{
-        console.log(errors, "errors");
-    }
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const errors = props.validate(props.initialValues);
+  if (Object.keys(errors).length === 0) {
+    props.onSubmit(props.initialValues);
+  } else {
+    console.log(errors, "errors");
   }
-});
+};
 </script>
 
 <template>
-  <slot></slot>
+  <form action="">
+    <slot></slot>
+    <slot name="button" :submit-form="handleSubmit"></slot>
+  </form>
 </template>

@@ -1,6 +1,6 @@
 <script setup>
 import { inputType } from "../enum";
-import { reactive, inject } from "vue";
+import { inject } from "vue";
 const props = defineProps({
   type: {
     type: String,
@@ -11,10 +11,10 @@ const props = defineProps({
     type: String,
     required: true,
     default: "email",
-  }
+  },
 });
 
-const values = reactive(inject("formValues"));
+const values = inject("formValues");
 
 const isNotValidInput = () => {
   return !inputType.includes(props.type);
