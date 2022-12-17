@@ -19,7 +19,7 @@ const submit = (values) => {
   console.log(values, "submit fonction");
   initialValues.email = "";
   initialValues.password = "";
-  initialValues.select = "3";
+  initialValues.select = "";
 };
 
 const validate = (values) => {

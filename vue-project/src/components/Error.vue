@@ -1,5 +1,5 @@
 <script setup>
-import { inject, watch } from "vue";
+import { inject } from "vue";
 
 const values = inject("errors");
 
@@ -7,7 +7,7 @@ const values = inject("errors");
 
 <template>
   <div v-if="values">
-    <div v-for="(items, key, index) in values" :key="index">
+    <div v-for="(items, index) in values" :key="index">
       <p class="error" v-for="(elem, i) in items" :key="index">
         {{ i }} : {{ elem }}
       </p>

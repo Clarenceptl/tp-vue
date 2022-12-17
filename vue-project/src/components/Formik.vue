@@ -22,7 +22,7 @@ provide("errors", error);
 
 const handleSubmit = (e) => {
   e.preventDefault();
-  if (error.length > 0) error.pop();
+  if (error.length > 0) error.splice(0, error.length);
   const errors = props.validate(props.initialValues);
   if (Object.keys(errors).length === 0) {
     props.onSubmit(props.initialValues);
