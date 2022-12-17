@@ -16,24 +16,28 @@ const props = defineProps({
 
 const values = inject("formValues");
 
-const isNotValidInput = () => {
-  return !inputType.includes(props.type);
+const isSelect = () => {
+  return props.type === "select";
+};
+const isValidInput = () => {
+  return inputType.includes(props.type);
 };
 </script>
 
 <template>
-  <div v-if="isNotValidInput()">Toto</div>
-  <div v-else>
+  <div v-if="isValidInput()">
     <label :for="name">{{ name }}</label>
-    <input
-      v-if="type !== 'select'"
-      :type="type"
+    <!-- Comprend pas pourquoi v-model ne marche pas ici -->
+    <component
+      :id="name"
+      :is="isSelect() ? 'select' : 'input'"
+      :type="!isSelect() ? type : null"
       :name="name"
-      v-model="values[type]"
-    />
-    <select v-else :name="name" v-model="values[type]">
-      <slot></slot>
-    </select>
+      :value="values[type]"
+      @input="(e) => (values[type] = e.target.value)"
+    >
+      <slot v-if="isSelect()"></slot>
+    </component>
   </div>
 </template>
 
