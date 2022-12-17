@@ -17,23 +17,23 @@ const props = defineProps({
 });
 provide("formValues", props.initialValues);
 
-let error = reactive([]);
-provide("errors", error);
+let errors = reactive([]);
+provide("errors", errors);
 
 const handleSubmit = (e) => {
   e.preventDefault();
-  if (error.length > 0) error.splice(0, error.length);
-  const errors = props.validate(props.initialValues);
-  if (Object.keys(errors).length === 0) {
+  if (errors.length > 0) errors.splice(0, errors.length);
+  const resErrors = props.validate(props.initialValues);
+  if (Object.keys(resErrors).length === 0) {
     props.onSubmit(props.initialValues);
   } else {
-    error.push(errors);
+    errors.push(resErrors);
   }
 };
 </script>
 
 <template>
-  <form action="">
+  <form>
     <slot></slot>
     <slot name="button" :submit-form="handleSubmit"></slot>
   </form>

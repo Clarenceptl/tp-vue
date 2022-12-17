@@ -44,6 +44,7 @@ const validate = (values) => {
       :on-submit="submit"
       :validate="validate"
     >
+      <Field type="notValid" name="Totoo" />
       <Field type="email" name="email" />
       <Field type="password" name="password" />
       <Field type="select" name="select">
